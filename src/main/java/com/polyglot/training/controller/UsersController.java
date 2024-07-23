@@ -1,6 +1,6 @@
 package com.polyglot.training.controller;
 
-import com.polyglot.training.dto.Alert;
+import com.polyglot.training.dto.AlertDTO;
 import com.polyglot.training.dto.UsersDTO;
 import org.apache.logging.log4j.message.Message;
 import org.springframework.http.HttpStatus;
@@ -18,26 +18,28 @@ public class UsersController {
         data.setPassword("Risa29");
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
+
     @PostMapping("/users")
-    public ResponseEntity<Alert> addUsers(){
-        Alert data = new Alert();
-        data.setMessage("Berhasil ditambahkan");
-        data.setStatus(true);
-        return new ResponseEntity<>(data, HttpStatus.CREATED);
-    }
-    @PutMapping("/users")
-    public ResponseEntity<Alert> editUsers(){
-        Alert data = new Alert();
-        data.setMessage("Berhasil diedit");
-        data.setStatus(true);
-        return new ResponseEntity<>(data, HttpStatus.CREATED);
-    }
-    @DeleteMapping("/users")
-    public ResponseEntity<Alert> deleteUsers(){
-        Alert data = new Alert();
-        data.setMessage("Berhasil dihapus");
+    public ResponseEntity<AlertDTO> addUsers(){
+        AlertDTO data = new AlertDTO();
+        data.setMessage("Data pengguna berhasil ditambahkan");
         data.setStatus(true);
         return new ResponseEntity<>(data, HttpStatus.CREATED);
     }
 
+    @PutMapping("/users")
+    public ResponseEntity<AlertDTO> editUsers(){
+        AlertDTO data = new AlertDTO();
+        data.setMessage("Data pengguna berhasil diedit");
+        data.setStatus(true);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users")
+    public ResponseEntity<AlertDTO> deleteUsers(){
+        AlertDTO data = new AlertDTO();
+        data.setMessage("Data pengguna gagal dihapus");
+        data.setStatus(false);
+        return new ResponseEntity<>(data, HttpStatus.BAD_GATEWAY);
+    }
 }
