@@ -1,10 +1,12 @@
 package com.polyglot.training.controller;
 
+import com.polyglot.training.dto.AlertDTO;
 import com.polyglot.training.dto.WelcomeDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,5 +43,24 @@ public class WelcomeController {
         data.setMessage("Assalamu'alaikum, 'Ahlan Wasahlan");
         data.setLanguage("Arab");
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<AlertDTO> getNilai(@RequestParam Integer nilai){
+        AlertDTO data = new AlertDTO();
+        data.setStatus(true);
+        HttpStatus status = HttpStatus.OK;
+        if (nilai >= 81 && nilai <=100){
+            data.setMessage("A");
+        } else if (nilai >= 51 && nilai <= 80){
+            data.setMessage("B");
+        } else if (nilai >= 0 && nilai <= 50) {
+            data.setMessage("C");
+        } else {
+            data.setMessage("Masukkan nilai di antara 0 sampai 100");
+            data.setStatus(false);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(data, status);
     }
 }
