@@ -2,16 +2,16 @@ package com.polyglot.training.controller;
 
 import com.polyglot.training.dto.WelcomeDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/welcome")
 public class WelcomeController {
 
-    @GetMapping("/welcome/english")
+    @GetMapping("/english")
     public ResponseEntity<WelcomeDTO> getEnglish(){
         WelcomeDTO data = new WelcomeDTO();
         data.setMessage("Hello, Welcome!");
@@ -19,7 +19,7 @@ public class WelcomeController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @GetMapping("/welcome/indonesia")
+    @GetMapping("/indonesia")
     public ResponseEntity<WelcomeDTO> getIndonesia(){
         WelcomeDTO data = new WelcomeDTO();
         data.setMessage("Halo, Selamat Datang!");
@@ -27,7 +27,7 @@ public class WelcomeController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @GetMapping("/welcome/spanish")
+    @GetMapping("/spanish")
     public ResponseEntity<WelcomeDTO> getSpanish(){
         WelcomeDTO data = new WelcomeDTO();
         data.setMessage("Hola, Bienvenido");
@@ -35,7 +35,7 @@ public class WelcomeController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @GetMapping("/welcome/arab")
+    @GetMapping("/arab")
     public ResponseEntity<WelcomeDTO> getArab(){
         WelcomeDTO data = new WelcomeDTO();
         data.setMessage("Assalamu'alaikum, 'Ahlan Wasahlan");

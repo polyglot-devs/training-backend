@@ -6,9 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/books")
 public class BooksController {
 
-    @GetMapping("/books")
+    @GetMapping
     public ResponseEntity<BooksDTO> getBooks(){
         BooksDTO data = new BooksDTO();
         data.setId(1);
@@ -17,17 +18,17 @@ public class BooksController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PostMapping("/books")
+    @PostMapping
     public ResponseEntity<String> addBooks(){
         return new ResponseEntity<>("Buku berhasil ditambahkan", HttpStatus.CREATED);
     }
 
-    @PutMapping("/books")
+    @PutMapping
     public ResponseEntity<String> editBooks(){
         return new ResponseEntity<>("Title harus diisi", HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/books")
+    @DeleteMapping
     public ResponseEntity<String> deleteBooks(){
         return new ResponseEntity<>("Buku tidak ditemukan", HttpStatus.NOT_FOUND);
     }
