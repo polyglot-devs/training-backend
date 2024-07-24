@@ -38,8 +38,8 @@ public class UsersController {
     @DeleteMapping("/users")
     public ResponseEntity<AlertDTO> deleteUsers(){
         AlertDTO data = new AlertDTO();
-        data.setMessage("Data pengguna gagal dihapus");
+        data.setMessage("Data yang ingin dihapus tidak ditemukan");
         data.setStatus(false);
-        return new ResponseEntity<>(data, HttpStatus.BAD_GATEWAY);
+        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
     }
 }

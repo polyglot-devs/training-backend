@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class BooksController {
 
     @GetMapping("/books")
-    public ResponseEntity<BooksDTO> welcome(){
+    public ResponseEntity<BooksDTO> getBooks(){
         BooksDTO data = new BooksDTO();
         data.setId(1);
         data.setAuthor("Tere Liye");
