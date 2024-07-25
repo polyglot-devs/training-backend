@@ -63,4 +63,13 @@ public class WelcomeController {
         }
         return new ResponseEntity<>(data, status);
     }
+
+    @GetMapping("/biodata")
+    public ResponseEntity<AlertDTO> getBiodata(@RequestParam String nama, @RequestParam Integer tahunLahir){
+        AlertDTO data = new AlertDTO();
+        int umur = 2024 - tahunLahir;
+        data.setMessage("Umur " + nama + " adalah " + umur + " tahun");
+        data.setStatus(true);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
 }
