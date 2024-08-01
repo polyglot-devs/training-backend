@@ -6,9 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
+
+    public List<UsersDTO> dataUser = List.of(
+            UsersDTO.builder().id(0).name("asyraf").password("asdf").build(),
+            UsersDTO.builder().id(1).name("rani").password("asdf").build()
+    );
 
     @GetMapping
     public ResponseEntity<UsersDTO> getUsers(){
