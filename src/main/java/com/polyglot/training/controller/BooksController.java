@@ -18,13 +18,15 @@ public class BooksController {
             BooksDTO.builder().id(3).title("Matahari").author("Tere Liye").build()
     );
 
-    @GetMapping
-    public ResponseEntity<BooksDTO> getBooks(){
-        BooksDTO data = new BooksDTO();
-        data.setId(1);
-        data.setAuthor("Tere Liye");
-        data.setTitle("Bulan");
+    @GetMapping("/{id}")
+    public ResponseEntity<BooksDTO> getBook(@PathVariable Integer id){
+        BooksDTO data = dataBuku.get(id);
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BooksDTO>> getBooks(){
+        return new ResponseEntity<>(dataBuku, HttpStatus.OK);
     }
 
     @PostMapping
