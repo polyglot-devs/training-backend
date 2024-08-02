@@ -12,11 +12,6 @@ import java.util.List;
 @RequestMapping("/users")
 public class UsersController {
 
-    public List<UsersDTO> dataUser = List.of(
-            UsersDTO.builder().id(0).name("asyraf").password("asdf").build(),
-            UsersDTO.builder().id(1).name("rani").password("asdf").build()
-    );
-
     @GetMapping("/login")
     public ResponseEntity<AlertDTO> getLogin(@RequestParam String username, @RequestParam String password) {
         HttpStatus status = HttpStatus.OK;

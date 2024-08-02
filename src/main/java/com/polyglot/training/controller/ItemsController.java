@@ -13,12 +13,6 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemsController {
 
-    public List<ItemsDTO> dataItems = List.of(
-            ItemsDTO.builder().id(1).name("sunscreen").description("perawatan").stock(100).price(150000L).build(),
-            ItemsDTO.builder().id(2).name("laptop").description("elektronik").stock(50).price(20000000L).build(),
-            ItemsDTO.builder().id(99).name("hp samsung").description("elektronik").stock(50).price(20000000L).build()
-    );
-
     @GetMapping("/{id}")
     public ResponseEntity<ItemsDTO> getDetailItem(@PathVariable Integer id) {
         for (int i = 0; i < dataItems.size(); i++) {
