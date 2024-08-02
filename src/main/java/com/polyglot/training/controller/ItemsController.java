@@ -2,6 +2,7 @@ package com.polyglot.training.controller;
 
 import com.polyglot.training.dto.ItemsDTO;
 import com.polyglot.training.dto.UsersDTO;
+import com.polyglot.training.util.Database;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ public class ItemsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ItemsDTO> getDetailItem(@PathVariable Integer id) {
+        List<ItemsDTO> dataItems = Database.dataItems;
         for (int i = 0; i < dataItems.size(); i++) {
             if (dataItems.get(i).getId().equals(id)) {
                 return new ResponseEntity<>(dataItems.get(i), HttpStatus.OK);
@@ -25,7 +27,6 @@ public class ItemsController {
 
     @GetMapping
     public ResponseEntity<List<ItemsDTO>> getItems() {
-        List<ItemsDTO> data = dataItems;
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        return new ResponseEntity<>(Database.dataItems, HttpStatus.OK);
     }
 }

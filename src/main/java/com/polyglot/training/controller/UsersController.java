@@ -2,6 +2,7 @@ package com.polyglot.training.controller;
 
 import com.polyglot.training.dto.AlertDTO;
 import com.polyglot.training.dto.UsersDTO;
+import com.polyglot.training.util.Database;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class UsersController {
     public ResponseEntity<AlertDTO> getLogin(@RequestParam String username, @RequestParam String password) {
         HttpStatus status = HttpStatus.OK;
         AlertDTO data = new AlertDTO();
+        List<UsersDTO> dataUser = Database.dataUser;
         for (int i = 0; i < dataUser.size(); i++) {
             if (dataUser.get(i).getName().equals(username) && dataUser.get(i).getPassword().equals(password)) {
                 data.setMessage("Login Berhasil");

@@ -1,6 +1,7 @@
 package com.polyglot.training.controller;
 
 import com.polyglot.training.dto.BooksDTO;
+import com.polyglot.training.util.Database;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,12 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BooksDTO> getBook(@PathVariable Integer id){
-        BooksDTO data = dataBuku.get(id);
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        return new ResponseEntity<>(Database.dataBuku.get(id), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<BooksDTO>> getBooks(){
-        return new ResponseEntity<>(dataBuku, HttpStatus.OK);
+        return new ResponseEntity<>(Database.dataBuku, HttpStatus.OK);
     }
 
     @PostMapping
