@@ -1,5 +1,6 @@
 package com.polyglot.training.controller;
 
+import com.polyglot.training.dto.AlertDTO;
 import com.polyglot.training.dto.ItemsDTO;
 import com.polyglot.training.dto.UsersDTO;
 import com.polyglot.training.util.Database;
@@ -14,6 +15,11 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemsController {
 
+    @GetMapping
+    public ResponseEntity<List<ItemsDTO>> getItems() {
+        return new ResponseEntity<>(Database.dataItems, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ItemsDTO> getDetailItem(@PathVariable Integer id) {
         List<ItemsDTO> dataItems = Database.dataItems;
@@ -25,8 +31,20 @@ public class ItemsController {
         return new ResponseEntity<>(new ItemsDTO(), HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ItemsDTO>> getItems() {
-        return new ResponseEntity<>(Database.dataItems, HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AlertDTO> deleteDetailItem(@PathVariable Integer id){
+        List<ItemsDTO> dataItems = Database.dataItems;
+        AlertDTO data = new AlertDTO();
+        data.setMessage("Data berhasil dihapus");
+        data.setStatus(true);
+        for (int i = 0; i < dataItems.size(); i++) {
+            if (dataItems.get(i).getId().equals(id)) {
+                dataItems.remove(i);
+                return new ResponseEntity<>(data, HttpStatus.OK);
+            }
+        }
+        data.setMessage("Data tidak ditemukan");
+        data.setStatus(false);
+        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
     }
 }
