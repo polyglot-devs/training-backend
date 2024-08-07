@@ -1,6 +1,7 @@
 package com.polyglot.training.controller;
 
 import com.polyglot.training.dto.BooksDTO;
+import com.polyglot.training.dto.request.BooksRequest;
 import com.polyglot.training.util.Database;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,12 @@ public class BooksController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addBooks(){
-        return new ResponseEntity<>("Buku berhasil ditambahkan", HttpStatus.CREATED);
+    public ResponseEntity<BooksDTO> addBooks(@RequestBody BooksRequest request){
+        BooksDTO data = new BooksDTO();
+        data.setId((int) (Math.random()*1000));
+        data.setTitle(request.getTitle());
+        data.setAuthor(request.getAuthor());
+        return new ResponseEntity<>(data, HttpStatus.CREATED);
     }
 
     @PutMapping
