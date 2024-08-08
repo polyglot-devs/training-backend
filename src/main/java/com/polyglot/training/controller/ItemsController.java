@@ -33,7 +33,7 @@ public class ItemsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<AlertDTO> deleteItem(@PathVariable Integer id){
+    public ResponseEntity<AlertDTO> deleteItem(@PathVariable Integer id) {
         List<ItemsDTO> dataItems = Database.dataItems;
         AlertDTO data = new AlertDTO();
         data.setMessage("Data berhasil dihapus");
@@ -50,26 +50,22 @@ public class ItemsController {
     }
 
     @PostMapping
-    public ResponseEntity<AlertDTO> addItem(@RequestBody ItemsRequest request){
-        List<ItemsDTO> dataItems = Database.dataItems;
+    public ResponseEntity<AlertDTO> addItem(@RequestBody ItemsRequest request) {
         AlertDTO response = new AlertDTO();
-        ItemsDTO data = new ItemsDTO();
-        data.setId((int)(Math.random()*1000));
-        data.setName(request.getName());
-        data.setDescription(request.getDescription());
-        data.setStock(request.getStock());
-        data.setPrice(request.getPrice());
-
-        if (request.getName() == null || request.getDescription() == null || request.getStock() == null || request.getPrice() == null){
+        if (request.getName() == null || request.getDescription() == null || request.getStock() == null || request.getPrice() == null) {
             response.setMessage("Data gagal ditambahkan");
             response.setStatus(false);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        else{
-            dataItems.add(data);
-            response.setMessage("Data berhasil ditambahkan");
-            response.setStatus(true);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        }
+        ItemsDTO data = new ItemsDTO();
+        data.setId((int) (Math.random() * 1000));
+        data.setName(request.getName());
+        data.setDescription(request.getDescription());
+        data.setStock(request.getStock());
+        data.setPrice(request.getPrice());
+        Database.dataItems.add(data);
+        response.setMessage("Data berhasil ditambahkan");
+        response.setStatus(true);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
