@@ -26,7 +26,7 @@ public class BooksController {
     @PostMapping
     public ResponseEntity<BooksDTO> addBooks(@RequestBody BooksRequest request){
         BooksDTO data = new BooksDTO();
-        data.setId((int) (Math.random()*1000));
+        data.setId((int)(Math.random()*1000));
         data.setTitle(request.getTitle());
         data.setAuthor(request.getAuthor());
         return new ResponseEntity<>(data, HttpStatus.CREATED);
