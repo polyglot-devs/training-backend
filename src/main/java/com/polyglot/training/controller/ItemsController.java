@@ -2,11 +2,8 @@ package com.polyglot.training.controller;
 
 import com.polyglot.training.Repositiory.ItemsRepository;
 import com.polyglot.training.dto.AlertDTO;
-import com.polyglot.training.dto.ItemsDTO;
 import com.polyglot.training.dto.request.ItemsRequest;
 import com.polyglot.training.model.Items;
-import com.polyglot.training.util.Database;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
