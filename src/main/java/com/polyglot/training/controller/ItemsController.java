@@ -6,6 +6,7 @@ import com.polyglot.training.dto.ItemsDTO;
 import com.polyglot.training.dto.request.ItemsRequest;
 import com.polyglot.training.model.Items;
 import com.polyglot.training.util.Database;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class ItemsController {
     private ItemsRepository itemsRepository;
 
     @GetMapping
-    public ResponseEntity<List<Items>> getItems2() {
+    public ResponseEntity<List<Items>> getItems() {
         return new ResponseEntity<>(itemsRepository.findAll(), HttpStatus.OK);
     }
 
@@ -36,19 +37,17 @@ public class ItemsController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<AlertDTO> deleteItem(@PathVariable Integer id) {
-        List<ItemsDTO> dataItems = Database.dataItems;
-        AlertDTO data = new AlertDTO();
-        data.setMessage("Data berhasil dihapus");
-        data.setStatus(true);
-        for (int i = 0; i < dataItems.size(); i++) {
-            if (dataItems.get(i).getId().equals(id)) {
-                dataItems.remove(i);
-                return new ResponseEntity<>(data, HttpStatus.OK);
-            }
+        AlertDTO response = new AlertDTO();
+        response.setMessage("Data berhasil dihapus");
+        response.setStatus(true);
+        Optional<Items> find = itemsRepository.findById(id);
+        if (find.isPresent()) {
+            itemsRepository.deleteById(id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        data.setMessage("Data tidak ditemukan");
-        data.setStatus(false);
-        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
+        response.setMessage("Data tidak ada");
+        response.setStatus(false);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -59,15 +58,34 @@ public class ItemsController {
             response.setStatus(false);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        ItemsDTO data = new ItemsDTO();
-        data.setId((int) (Math.random() * 1000));
+        Items data = new Items();
         data.setName(request.getName());
         data.setDescription(request.getDescription());
         data.setStock(request.getStock());
         data.setPrice(request.getPrice());
-        Database.dataItems.add(data);
+        itemsRepository.save(data);
         response.setMessage("Data berhasil ditambahkan");
         response.setStatus(true);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AlertDTO> updateItem(@PathVariable Integer id, @RequestBody ItemsRequest request){
+        AlertDTO response = new AlertDTO();
+        response.setMessage("Data berhasil di update");
+        response.setStatus(true);
+        Optional<Items> find = itemsRepository.findById(id);
+        if (find.isPresent()){
+            find.get().setName(request.getName());
+            find.get().setDescription(request.getDescription());
+            find.get().setStock(request.getStock());
+            find.get().setPrice(request.getPrice());
+            itemsRepository.save(find.get());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.setMessage("Data tidak ditemukan");
+        response.setStatus(false);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
     }
 }
