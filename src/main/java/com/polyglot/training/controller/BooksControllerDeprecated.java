@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
-public class BooksController {
+@RequestMapping("/books/deprecated")
+@Deprecated
+public class BooksControllerDeprecated {
 
     @GetMapping("/{id}")
     public ResponseEntity<BooksDTO> getBook(@PathVariable Integer id){
