@@ -12,26 +12,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/items")
-public class ItemsController {
-    @Autowired
-    private ItemsRepository itemsRepository;
+@RequestMapping("/items/deprecated")
+@Deprecated
+public class ItemsControllerDeprecated {
 
     @GetMapping
-    public ResponseEntity<List<Items>> getItems2() {
-        return new ResponseEntity<>(itemsRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ItemsDTO>> getItems() {
+        return new ResponseEntity<>(Database.dataItems, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Items> getDetailItem(@PathVariable Integer id) {
-        Optional<Items> find = itemsRepository.findById(id);
-        if (find.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ItemsDTO> getDetailItem(@PathVariable Integer id) {
+        List<ItemsDTO> dataItems = Database.dataItems;
+        for (int i = 0; i < dataItems.size(); i++) {
+            if (dataItems.get(i).getId().equals(id)) {
+                return new ResponseEntity<>(dataItems.get(i), HttpStatus.OK);
+            }
         }
-        return new ResponseEntity<>(find.get(), HttpStatus.OK);
+        return new ResponseEntity<>(new ItemsDTO(), HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
